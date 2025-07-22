@@ -8,7 +8,7 @@ AI-powered Resume Evaluation and Enhancement Web App using Flask &amp; Gemini AP
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/ai-resume-analyzer.git
+git clone https://github.com/Jotiba-U/ai-resume-analyzer.git
 cd ai-resume-analyzer/Resume_analyzer
 
 # Create virtual environment (optional but recommended)
