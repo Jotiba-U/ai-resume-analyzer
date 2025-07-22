@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login - AI Resume Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>AI Resume Analyzer</h1>
+    <a href="{{ url_for('main.home') }}" class="logout">Home</a>
+  </div>
+
+  <!-- Admin Login Form -->
+  <div class="login-container">
+    <h2>Admin Login</h2>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="flash">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <button type="submit" class="btn-submit">Login</button>
+    </form>
+
+    <p class="note">
+      Only authorized administrators can access this section.
+    </p>
+  </div>
+
+</body>
+</html>

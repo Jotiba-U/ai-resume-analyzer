@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/user_dashboard.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    .feedback-box {
+      margin-top: 10px;
+      background-color: #f9f9f9;
+      border-left: 5px solid #004080;
+      padding: 15px;
+      display: none;
+    }
+    .view-btn {
+      background: none;
+      border: none;
+      color: #0066cc;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .view-btn:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header class="dashboard-header">
+    <div class="user-info">
+      <div class="user-avatar">{{ user_email[0]|upper }}</div>
+      <p>{{ user_email }}</p>
+    </div>
+    <nav class="nav-links">
+      <a href="{{ url_for('main.upload_resume') }}"><i class="fas fa-upload"></i> Upload Resume</a>
+      <a href="{{ url_for('main.logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <section class="summary">
+    <h2>📋 Profile Summary</h2>
+    <p><strong>Email:</strong> {{ user_email }}</p>
+    <p><strong>Total Resumes:</strong> {{ total_resumes }}</p>
+    <p><strong>Average Score:</strong> {{ average_score }}</p>
+  </section>
+
+  <section class="history">
+    <h2>📄 Your Resume Submissions</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Filename</th>
+          <th>Job Profile</th>
+          <th>Score</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in resume_data %}
+        <tr>
+          <td>{{ row.filename }}</td>
+          <td>{{ row.job_profile }}</td>
+          <td>
+            {{ row.score }} / 100
+            <div class="progress-bar-container">
+              <div class="progress-bar" style="width: {{ row.score }}%;"></div>
+            </div>
+          </td>
+          <td>
+            <button class="view-btn" id="btn-{{ row.id }}" onclick="toggleFeedback({{ row.id }})">
+              <i class="fas fa-eye"></i> View
+            </button>
+            <form method="POST" action="{{ url_for('main.delete_resume', resume_id=row.id) }}" style="display:inline;">
+              <button type="submit" class="delete-btn"><i class="fas fa-trash"></i> Delete</button>
+            </form>
+          </td>
+        </tr>
+        <tr id="feedback-{{ row.id }}" class="feedback-box-row">
+          <td colspan="4">
+            <div class="feedback-box" id="box-{{ row.id }}">
+              <p><strong>📌 Match Summary:</strong> {{ row.match_summary }}</p>
+
+              <p><strong>✅ Strengths:</strong></p>
+              <ul>
+                {% for s in row.strengths %}
+                  <li>{{ s }}</li>
+                {% else %}
+                  <li>No strengths available.</li>
+                {% endfor %}
+              </ul>
+
+              <p><strong>⚠️ Weaknesses:</strong></p>
+              <ul>
+                {% for w in row.weaknesses %}
+                  <li>{{ w }}</li>
+                {% else %}
+                  <li>No weaknesses provided.</li>
+                {% endfor %}
+              </ul>
+
+              <p><strong>💡 Suggestions:</strong></p>
+              <ul>
+                {% for sug in row.suggestions %}
+                  <li>{{ sug }}</li>
+                {% else %}
+                  <li>No suggestions available.</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  <script>
+    function toggleFeedback(id) {
+      const box = document.getElementById('box-' + id);
+      const btn = document.getElementById('btn-' + id);
+      const isVisible = box.style.display === "block";
+      box.style.display = isVisible ? "none" : "block";
+      btn.innerHTML = isVisible
+        ? '<i class="fas fa-eye"></i> View'
+        : '<i class="fas fa-eye-slash"></i> Hide';
+    }
+  </script>
+</body>
+</html>

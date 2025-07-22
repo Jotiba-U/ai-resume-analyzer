@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <div class="navbar">
+        <h1><i class="fa-solid fa-user-shield"></i> Admin Dashboard</h1>
+        <a href="{{ url_for('admin.admin_logout') }}" class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+    </div>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(category_filter=['admin']) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for message in messages %}
+                        <div class="flash">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Filename</th>
+                    <th>Job Profile</th>
+                    <th>Score</th>
+                    <th>Feedback</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for r in resumes %}
+                <tr>
+                    <td>{{ r.username }}</td>
+                    <td>{{ r.filename }}</td>
+                    <td>{{ r.job_profile }}</td>
+                    <td>
+                        {% set score = r.score|round|int %}
+                        <span class="score-badge" style="
+                            background-color:
+                                {% if score < 50 %}#ef4444
+                                {% elif score < 75 %}#f59e0b
+                                {% else %}#10b981
+                                {% endif %};
+                            ">
+                            {{ score }}/100
+                        </span>
+                    </td>
+                    <td>
+                        {{ r.feedback.suggestions[0] if r.feedback.suggestions else 'No suggestions available.' }}
+                        <div class="feedback-toggle">
+                            <button type="button" class="btn btn-view" onclick="toggleFeedback(this)">
+                                <i class="fa-solid fa-eye"></i> View More
+                            </button>
+                            <div class="feedback-box">
+                                {% if r.feedback.strengths %}
+                                    <strong>Strengths:</strong>
+                                    <ul>
+                                        {% for s in r.feedback.strengths %}
+                                            <li>{{ s }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                {% if r.feedback.weaknesses %}
+                                    <strong>Weaknesses:</strong>
+                                    <ul>
+                                        {% for w in r.feedback.weaknesses %}
+                                            <li>{{ w }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                                {% if r.feedback.suggestions %}
+                                    <strong>Suggestions:</strong>
+                                    <ul>
+                                        {% for s in r.feedback.suggestions %}
+                                            <li>{{ s }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('admin.delete_resume', resume_id=r.id) }}">
+                            <button type="submit" class="btn btn-delete">
+                                <i class="fa-solid fa-trash"></i> Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function toggleFeedback(button) {
+            const box = button.nextElementSibling;
+            const isVisible = box.style.display === 'block';
+            box.style.display = isVisible ? 'none' : 'block';
+            button.innerHTML = isVisible
+                ? '<i class="fa-solid fa-eye"></i> View More'
+                : '<i class="fa-solid fa-eye-slash"></i> Hide Feedback';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #004080, #0066cc);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    color: #004080;
+}
+
+/* ===== Header ===== */
+header {
+    background-color: white;
+    color: #004080;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+nav a {
+    color: #004080;
+    margin-left: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+    background-color: #e6f0ff;
+}
+
+/* ===== Sections ===== */
+.summary,
+.history {
+    margin: 40px auto;
+    padding: 30px;
+    max-width: 950px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.summary:hover,
+.history:hover {
+    transform: translateY(-6px);
+}
+
+.summary h2,
+.history h2 {
+    color: #003060;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #cce0ff;
+    padding-bottom: 10px;
+}
+
+/* ===== Table ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 14px;
+    border-bottom: 1px solid #dcdcdc;
+    font-size: 1rem;
+    vertical-align: top;
+}
+
+th {
+    background-color: #f0f6fc;
+    color: #004080;
+}
+
+td a {
+    color: #0066cc;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+td a:hover {
+    text-decoration: underline;
+    color: #003d80;
+}
+
+/* ===== Buttons ===== */
+button {
+    font-weight: bold;
+    color: #d9534f;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    text-decoration: underline;
+    color: #c9302c;
+}
+
+/* ===== Flash Messages ===== */
+.flash-message {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* ===== Progress Bar ===== */
+.progress-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    height: 10px;
+    margin-top: 5px;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #28a745;
+    border-radius: 8px;
+    transition: width 0.4s ease;
+}
+
+/* ===== User Avatar ===== */
+.user-avatar {
+    background-color: #004080;
+    color: white;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* ===== Feedback Section ===== */
+.feedback-box {
+    background-color: #f7f9fc;
+    padding: 20px;
+    border: 1px solid #cce0ff;
+    border-radius: 12px;
+    margin-top: 10px;
+    font-size: 0.95rem;
+}
+
+.feedback-box h4 {
+    margin-bottom: 10px;
+    color: #003060;
+}
+
+.feedback-box ul {
+    padding-left: 20px;
+    margin: 5px 0 15px 0;
+}
+
+.feedback-box li {
+    margin-bottom: 4px;
+}

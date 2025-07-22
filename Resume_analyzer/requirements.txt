@@ -1,0 +1,13 @@
+# Web Framework & Routing
+Flask==2.3.3
+Werkzeug==2.3.7
+
+# Environment Variable Loader
+python-dotenv==1.0.1
+
+# Resume Parsing
+pdfplumber==0.10.2
+docx2txt==0.8
+
+# Gemini AI API
+google-generativeai==0.3.2

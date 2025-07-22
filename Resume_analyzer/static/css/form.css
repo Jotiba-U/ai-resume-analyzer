@@ -1,0 +1,131 @@
+body {
+  background: linear-gradient(135deg, #004080, #0066cc);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+header {
+  background: #fff;
+  padding: 16px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #004080;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+header a {
+  color: #0059b3;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+header a:hover {
+  color: #003d80;
+  text-decoration: underline;
+}
+
+/* Shared styles for login & register */
+.form-container {
+  background: #fff;
+  color: #004080;
+  padding: 40px 35px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  max-width: 420px;
+  margin: 60px auto 0;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.form-container:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  margin-bottom: 30px;
+  font-weight: 700;
+  font-size: 2.4rem;
+  letter-spacing: 1.3px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  padding: 16px 20px;
+  font-size: 1.1rem;
+  border: 2.5px solid #cce0ff;
+  border-radius: 12px;
+  color: #004080;
+  font-weight: 600;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+input:focus {
+  outline: none;
+  border-color: #0059b3;
+  box-shadow: 0 0 12px rgba(0, 89, 179, 0.6);
+  background: #e6f0ff;
+}
+
+button {
+  background-color: #0059b3;
+  color: #fff;
+  padding: 18px 0;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.9px;
+  box-shadow: 0 10px 25px rgba(0, 89, 179, 0.7);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+  background-color: #003d80;
+  box-shadow: 0 14px 35px rgba(0, 61, 128, 0.85);
+}
+
+.register-link {
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #004080;
+}
+
+.register-link a {
+  color: #0059b3;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.3s ease;
+}
+
+.register-link a:hover {
+  color: #003d80;
+  text-decoration: underline;
+}
+
+.flash-message {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: #d9534f;
+}

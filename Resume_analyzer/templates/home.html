@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Resume Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h2><i class="fa-solid fa-file-lines"></i> AI Resume Analyzer</h2>
+    <nav>
+      <a href="{{ url_for('main.home') }}"><i class="fa-solid fa-house"></i> Home</a>
+      <a href="{{ url_for('admin.admin_login') }}"><i class="fa-solid fa-lock"></i> Admin</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Welcome to Your Smart Resume Helper</h1>
+      <p>Upload your resume, get detailed AI-powered feedback, and enhance your resume to land your dream job.</p>
+      <a href="{{ url_for('main.start') }}" class="btn-primary"><i class="fa-solid fa-upload"></i> Get Started</a>
+    </section>
+
+    <section class="features">
+      {% for icon, title, desc in [
+        ('fa-upload', 'Upload & Analyze', 'Easily upload your resume in PDF or DOC format and let our AI evaluate your strengths and weaknesses.'),
+        ('fa-lightbulb', 'Personalized Feedback', 'Receive customized suggestions to improve skills, formatting, and content for a powerful resume.'),
+        ('fa-lock', 'Secure & Private', 'Your data is safe with us. We never share your resume and ensure secure file handling.'),
+        ('fa-user-shield', 'Admin Management', 'Admins can monitor uploads and maintain the platform efficiently through a secure dashboard.')
+      ] %}
+      <div class="feature-card">
+        <h3><i class="fa-solid {{ icon }}"></i> {{ title }}</h3>
+        <p>{{ desc }}</p>
+      </div>
+      {% endfor %}
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 AI Resume Analyzer. All rights reserved.</p>
+    <p>Contact us: <a href="mailto:support@resumeanalyzer.com">support@resumeanalyzer.com</a></p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Resume Feedback</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="container" role="main" aria-label="Resume Feedback Report">
+    <h1>Resume Analysis Report</h1>
+
+    {% if score %}
+    <div class="section" id="score">
+      <h2><i class="fa-solid fa-star"></i> Resume Score</h2>
+      <div class="feedback-box" aria-live="polite">
+        <p>Your resume score for <strong>{{ job_profile }}</strong>: <strong>{{ score }}/100</strong></p>
+        <div class="score-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="{{ score }}">
+          <div class="score-fill {% if score < 50 %}low{% elif score < 75 %}mid{% else %}high{% endif %}" style="width: {{ score }}%;">
+            {{ score }}%
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if feedback_text %}
+    <div class="section" id="summary">
+      <h2><i class="fa-solid fa-align-left"></i> Match Summary</h2>
+      <div class="feedback-box">{{ feedback_text }}</div>
+    </div>
+    {% endif %}
+
+    {% for section, icon, label, items in [
+      ('strengths', 'fa-thumbs-up', 'Strengths', strengths),
+      ('weaknesses', 'fa-exclamation-triangle', 'Weaknesses', weaknesses),
+      ('suggestions', 'fa-tools', 'Suggestions for Improvement', suggestions)
+    ] if items %}
+    <div class="section" id="{{ section }}">
+      <h2><i class="fa-solid {{ icon }}"></i> {{ label }}</h2>
+      <div class="feedback-box">
+        <ul>{% for item in items %}<li>{{ item }}</li>{% endfor %}</ul>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% if not score and not strengths and not weaknesses and not suggestions %}
+    <div class="section">
+      <h2><i class="fa-solid fa-align-left"></i> Match Summary</h2>
+      <div class="feedback-box">Could not generate feedback. Please try again later.</div>
+    </div>
+    {% endif %}
+
+    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;">
+      <a href="{{ url_for('main.upload_resume') }}" class="btn-back">Upload Another Resume</a>
+      <button class="btn-print" onclick="window.print()">
+        <i class="fa-solid fa-print"></i> Print Feedback
+      </button>
+    </div>
+  </div>
+
+  <script>
+    window.addEventListener('load', () => {
+      const fill = document.querySelector('.score-fill');
+      if (fill) {
+        const width = fill.style.width;
+        fill.style.width = '0%';
+        setTimeout(() => { fill.style.width = width; }, 100);
+      }
+    });
+  </script>
+</body>
+</html>

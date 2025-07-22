@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Upload Resume - AI Resume Analyzer</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/upload.css') }}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="upload-page">
+  <header>
+    <h2>Upload Resume</h2>
+    {% if session.get('email') %}
+    <nav>
+      <div class="user-menu" tabindex="0" aria-label="User Menu">
+        <i class="fas fa-user"></i>
+        <div class="dropdown-content" role="menu">
+          <a href="#">Logged in as {{ session.get('email') }}</a>
+          <a href="{{ url_for('user.user_dashboard') }}">My Profile</a>
+          <a href="{{ url_for('main.logout') }}">Logout</a>
+        </div>
+      </div>
+    </nav>
+    {% endif %}
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <div class="upload-container">
+    <h2>Select Your Resume File</h2>
+    <form id="uploadForm" action="{{ url_for('main.upload_resume') }}" method="POST" enctype="multipart/form-data" novalidate>
+      <input type="file" name="resume_file" accept=".pdf,.doc,.docx" required />
+      <label for="job_profile">Enter Job Profile:</label>
+      <input type="text" id="job_profile" name="job_profile" placeholder="e.g., Web Developer" required />
+      <button type="submit">Analyze Resume</button>
+      <div id="loading-spinner"></div>
+    </form>
+    <p class="note">Supported formats: PDF, DOC, DOCX</p>
+  </div>
+
+  <script>
+    const form = document.getElementById('uploadForm');
+    const fileInput = form.querySelector('input[type="file"]');
+    const jobInput = form.querySelector('#job_profile');
+    const spinner = document.getElementById('loading-spinner');
+
+    form.addEventListener('submit', (e) => {
+      const allowedExtensions = /\.(pdf|doc|docx)$/i;
+      if (!fileInput.value || !allowedExtensions.test(fileInput.value)) {
+        e.preventDefault();
+        alert("Please upload a valid file (.pdf, .doc, .docx)");
+        return false;
+      }
+      if (!jobInput.value.trim()) {
+        e.preventDefault();
+        alert("Please enter a job profile.");
+        return false;
+      }
+      spinner.style.display = 'block';
+    });
+  </script>
+</body>
+</html>
